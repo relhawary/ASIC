@@ -25,6 +25,10 @@ ARCHITECTURE tbarch OF prbs_tb IS
 	SIGNAL data_in : std_logic := '0';
 	SIGNAL test_out : std_logic_vector (95 DOWNTO 0) := x"558AC4A53A1724E163AC2BF9";
 	SIGNAL data_out : std_logic;
+
+	SIGNAL fulld : std_logic_vector(95 DOWNTO 0);
+	--SIGNAL fulld : std_logic_vector(23 DOWNTO 0);
+	SIGNAL bitd : std_logic;
 	CONSTANT PERIOD : TIME := 20 ns;
 	CONSTANT seed_value : std_logic_vector(14 DOWNTO 0) := "011011100010101";
 BEGIN
@@ -52,7 +56,7 @@ BEGIN
 		--WAIT UNTIL falling_edge(clk);
 		load <= '1';
 		seed <= seed_value;
-		WAIT FOR (2 * period);
+		WAIT FOR (2.5 * period);
 		--WAIT UNTIL falling_edge(clk);
 		load <= '0';
 		en <= '1';
@@ -62,9 +66,11 @@ BEGIN
 		--check input/output
 		--WAIT FOR (2 * PERIOD);
 		FOR i IN 95 DOWNTO 0 LOOP
-			WAIT UNTIL RISING_edge(clk);
+			--WAIT UNTIL RISING_edge(clk);
 			data_in <= test_in(i);
-			--WAIT FOR (PERIOD);
+			bitd <= test_out(i);
+			fulld(i) <= data_out;
+			WAIT FOR (PERIOD);
 			ASSERT(data_out = test_out(i))
 			REPORT "wrong output"
 				SEVERITY note;

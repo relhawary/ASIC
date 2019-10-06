@@ -17,7 +17,7 @@ BEGIN
 	BEGIN
 		IF (reset = '1') THEN
 			r_reg <= (OTHERS => '0');
-		ELSIF (rising_edge(clk)) THEN
+		ELSIF (clk'event AND clk = '1') THEN
 			IF (load = '1') THEN
 				r_reg <= seed;
 			ELSIF (en = '1') THEN
