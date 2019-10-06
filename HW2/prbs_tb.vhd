@@ -10,23 +10,23 @@ ARCHITECTURE tbarch OF prbs_tb IS
 		PORT (
 			clk, reset, load, en : IN std_logic;
 			seed : IN std_logic_vector(14 DOWNTO 0);
-			data_in : IN std_logic_vector(95 DOWNTO 0);
-			data_out : OUT std_logic_vector(95 DOWNTO 0)
+			data_in : IN std_logic;
+			data_out : OUT std_logic
 		);
 	END COMPONENT;
 
 	SIGNAL clk : std_logic := '0';
 	SIGNAL load : std_logic := '0';
-	SIGNAL en : std_logic := '1';
+	SIGNAL en : std_logic := '0';
 	SIGNAL reset : std_logic := '0';
 
-	SIGNAL seed : std_logic_vector (14 DOWNTO 0);
+	SIGNAL seed : std_logic_vector (14 DOWNTO 0) := "000000000000000";
 	SIGNAL test_in : std_logic_vector (95 DOWNTO 0) := x"ACBCD2114DAE1577C6DBF4C9";
-	SIGNAL data_in : std_logic;
+	SIGNAL data_in : std_logic := '0';
 	SIGNAL test_out : std_logic_vector (95 DOWNTO 0) := x"558AC4A53A1724E163AC2BF9";
 	SIGNAL data_out : std_logic;
-	CONSTANT PERIOD : TIME := 10 ns;
-	CONSTANT seed_value : std_logic_vector(14 DOWNTO 0) := '011011100010101';
+	CONSTANT PERIOD : TIME := 20 ns;
+	CONSTANT seed_value : std_logic_vector(14 DOWNTO 0) := "011011100010101";
 BEGIN
 	uut : prbs
 	PORT MAP(
@@ -39,34 +39,36 @@ BEGIN
 		data_out => data_out
 	);
 
-	clk <= NOT clk AFTER period/2;
+	clk <= NOT clk AFTER PERIOD/2;
 
 	PROCESS
 	BEGIN
 		reset <= '1';
-		data_in <= '0';
-		WAIT FOR (2 * period);
+		--data_in <= '0';
+		WAIT FOR (1.5 * PERIOD);
 		reset <= '0';
-
+		WAIT FOR (1.5 * PERIOD);
 		-- check seed load
-		WAIT UNTIL falling_edge(clk);
+		--WAIT UNTIL falling_edge(clk);
 		load <= '1';
 		seed <= seed_value;
 		WAIT FOR (2 * period);
+		--WAIT UNTIL falling_edge(clk);
 		load <= '0';
+		en <= '1';
 		ASSERT(seed = seed_value)
 		REPORT "seed load"
-		SEVERITY note;
-
+			SEVERITY note;
 		--check input/output
-
-		FOR i IN 0 TO 95 LOOP
+		--WAIT FOR (2 * PERIOD);
+		FOR i IN 95 DOWNTO 0 LOOP
+			WAIT UNTIL RISING_edge(clk);
 			data_in <= test_in(i);
-			WAIT UNTIL falling_edge(clk);
+			--WAIT FOR (PERIOD);
 			ASSERT(data_out = test_out(i))
 			REPORT "wrong output"
-			SEVERITY failure;
+				SEVERITY note;
 		END LOOP;
 		WAIT;
 	END PROCESS;
-END tbarch
+END tbarch;

@@ -1,41 +1,39 @@
-library ieee;
-use ieee.std_logic_1164.all;
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+ENTITY prbs IS
+	PORT (
+		clk, reset : IN std_logic;
+		data_input : IN std_logic;
+		data_output : OUT std_logic;
+		load : IN std_logic;
+		en : IN std_logic;
+		seed : IN std_logic_vector(14 DOWNTO 0)
+	);
+END prbs;
 
+ARCHITECTURE randomizer OF prbs IS
+	SIGNAL r_reg : std_logic_vector(14 DOWNTO 0);
+	SIGNAL r_next : std_logic_vector(14 DOWNTO 0);
+BEGIN
+	-- register
+	PROCESS (clk, reset, en, load)
+	BEGIN
+		IF (reset = '1') THEN
+			r_reg <= (OTHERS => '0');
 
-entity prbs is
-   port(
-      clk, reset : in std_logic;
-      data_input : in std_logic;
-      data_output: out std_logic;
-      load 		 : in std_logic;
-      en		 : in std_logic;
-	  seed 		 : in std_logic_vector(14 downto 0)
-   );
-end prbs;
+		ELSIF (clk'event AND clk = '1') THEN
 
-architecture randomizer of prbs is
-   signal r_reg: std_logic_vector( 14 downto 0 ) ;
-   signal r_next: std_logic_vector( 14 downto 0 );
-begin
-   -- register
-   process(clk,reset)
-   begin
-      if (reset='1') then
-         r_reg <= (others=>'0');
+			IF (load = '1') THEN
+				r_reg <= seed;
 
-      elsif (clk'event and clk='1') then
+			ELSIF (en = '1') THEN
+				r_reg <= r_next;
 
-        if (load = '1') then
-         r_reg <= seed;
-
-       elsif (en = '1') then
-       r_reg <= r_next ;
-
-    end if;
-    end if;
-   end process;
-   -- next-state shifting
-   r_next <= (r_reg(1) xor r_reg(0)) & r_reg(14 downto 1);
-   -- output
-   data_output <= (r_reg(1) xor r_reg(0)) xor data_input;
-end randomizer;
+			END IF;
+		END IF;
+	END PROCESS;
+	-- next-state shifting
+	r_next <= (r_reg(1) XOR r_reg(0)) & r_reg(14 DOWNTO 1);
+	-- output
+	data_output <= (r_reg(1) XOR r_reg(0)) XOR data_input;
+END randomizer;

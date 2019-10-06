@@ -6,18 +6,18 @@ ENTITY prbs IS
 		clk, en, reset, load : IN std_logic;
 		seed : IN std_logic_vector(14 DOWNTO 0);
 		data_in : IN std_logic;
-		data_out : OUT std_logic;
+		data_out : OUT std_logic
 	);
 END prbs;
 
 ARCHITECTURE prbs_arch OF prbs IS
 	SIGNAL r_reg, r_next : std_logic_vector(14 DOWNTO 0);
 BEGIN
-	PROCESS (clk, reset)
+	PROCESS (clk, reset, en, load)
 	BEGIN
 		IF (reset = '1') THEN
 			r_reg <= (OTHERS => '0');
-		ELSIF (clk'event AND clk = '1') THEN
+		ELSIF (rising_edge(clk)) THEN
 			IF (load = '1') THEN
 				r_reg <= seed;
 			ELSIF (en = '1') THEN
