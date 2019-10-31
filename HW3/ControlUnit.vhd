@@ -7,7 +7,7 @@ ENTITY ControlUnit IS
         floors : INTEGER := 10;
         floors_bits : INTEGER := 4;
         timer_counter_bits : INTEGER := 4;
-        timer_counts : INTEGER := 10
+        timer_counts : INTEGER := 11
     );
     PORT (
         clk, rst : IN std_logic;
@@ -16,7 +16,9 @@ ENTITY ControlUnit IS
         -- elevator_buttons : OUT std_logic_vector(floors - 1 DOWNTO 0);
         up_indicator, down_indicator, door_open : OUT std_logic;
         current_floor : OUT std_logic_vector (floors_bits - 1 DOWNTO 0);
-        request : IN std_logic_vector (floors_bits - 1 DOWNTO 0)
+        request : IN std_logic_vector (floors_bits - 1 DOWNTO 0);
+        --for V2
+        moving_up: out std_logic
     );
 END ControlUnit;
 
@@ -29,7 +31,7 @@ ARCHITECTURE cuarch OF ControlUnit IS
     SIGNAL counter_reg, counter_next: unsigned (timer_counter_bits - 1 DOWNTO 0);
     SIGNAL current_floor_int : std_logic_vector(floors_bits - 1 DOWNTO 0);
     signal door_open_int: std_logic;
-    --signal counter_out:std_logic;
+    signal counter_out:std_logic;
       
     -- COMPONENT RequestResolver IS
     --     PORT (
@@ -45,12 +47,13 @@ ARCHITECTURE cuarch OF ControlUnit IS
 BEGIN
     current_floor <= current_floor_int;
     door_open<=door_open_int;
-    --counter_out<='1' when (counter_reg>=0) and (counter_reg<=timer_counts) else '0';
+    counter_out<='1' when (to_integer(counter_reg)>=0) and (to_integer(counter_reg)<timer_counts) else '0';
     PROCESS (clk, rst)
     BEGIN
         IF (rst = '1') THEN
             state_reg <= idle;
             counter_reg <= (OTHERS => '0');
+            moving_up<='1';
         ELSIF (clk'event AND clk = '1') THEN
             state_reg <= state_next;
             counter_reg <= counter_next;
@@ -63,9 +66,12 @@ BEGIN
             WHEN idle =>
                 --doorOpenCounter : FOR k IN 0 TO timer_counts + 1 LOOP
                -- counter_next<="0001";
-                    IF (counter_reg >= 0 AND counter_reg < timer_counts) THEN
+               up_indicator<='0';
+               down_indicator<='0';
+               counter_next<=counter_reg + 1;
+                    IF (counter_out='1') THEN
                         door_open_int <= '1';
-                        counter_next<=counter_reg + 1;
+                        --counter_next<=counter_reg + 1;
                     ELSE
                         door_open_int <= '0';
                         counter_next<=(others=>'0');
@@ -81,11 +87,15 @@ BEGIN
             state_next<=idle;
             door_open_int<='0';
             counter_next<=(others=>'0');
+            up_indicator<='1';
+            moving_up<='1';
             when down=>
             current_floor_int<=request;
             state_next<=idle;
             door_open_int<='0';
             counter_next<=(others=>'0');
+            down_indicator<='1';
+            moving_up<='0';
             end case;
         END PROCESS;
     END cuarch;
