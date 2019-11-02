@@ -27,10 +27,10 @@ ARCHITECTURE tbarch OF testbench IS
 
 	SIGNAL clk : std_logic := '0';
 	SIGNAL reset : std_logic := '1';
-	SIGNAL up_buttons_tb, down_buttons_tb : std_logic_vector(8 DOWNTO 0);
-	SIGNAL elevator_buttons_tb : std_logic_vector(9 DOWNTO 0);
+	SIGNAL up_buttons_tb, down_buttons_tb : std_logic_vector(8 DOWNTO 0) := B"000000000";
+	SIGNAL elevator_buttons_tb : std_logic_vector(9 DOWNTO 0) := B"0000000000";
 	SIGNAL up_indicator_tb, down_indicator_tb, door_open_tb : std_logic;
-	CONSTANT period : TIME := 30 ns;
+	CONSTANT period : TIME := 10 ns;
 BEGIN
 	uut : design
 	PORT MAP(
@@ -52,10 +52,15 @@ BEGIN
 		WAIT FOR (1 * period);
 		reset <= '0';
 		WAIT FOR (1 * period);
-		up_buttons_tb <= B"000010010";
-		down_buttons_tb <= B"000100010";
+		up_buttons_tb <= B"000010000";
 		WAIT FOR (1 * period);
-		elevator_buttons_tb <= B"0010000001";
+		up_buttons_tb <= B"000000010";
+		WAIT FOR (1 * period);
+		up_buttons_tb <= B"000000100";
+		WAIT FOR (1 * period);
+		down_buttons_tb <= B"010000000";
+		WAIT FOR (1 * period);
+		elevator_buttons_tb <= B"1000000001";
 
 	END PROCESS;
 

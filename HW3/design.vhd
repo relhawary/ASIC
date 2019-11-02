@@ -23,11 +23,10 @@ END design;
 
 ARCHITECTURE elevatorarch OF design IS
 
-	--fsm typdef  ???
 	TYPE elevator_fsm IS(idle, up, down, door);
 	SIGNAL state_reg, state_next : elevator_fsm;
 	SIGNAL req_reg, req_next : std_logic_vector(floors - 1 DOWNTO 0);
-	SIGNAL request, cur_floor: std_logic_vector(floor_bits - 1 DOWNTO 0);
+	SIGNAL request, cur_floor : std_logic_vector(floor_bits - 1 DOWNTO 0);
 	SIGNAL min_req, max_req : std_logic_vector(floor_bits - 1 DOWNTO 0);
 	SIGNAL counter_reg, counter_next : unsigned (timer_counter_bits - 1 DOWNTO 0);
 	SIGNAL up_indicator_int, down_indicator_int, door_open_int, counter_out : std_logic;
@@ -39,7 +38,7 @@ BEGIN
 	down_indicator <= down_indicator_int;
 	door_open <= door_open_int;
 	counter_out <= '1' WHEN (to_integer(counter_reg) >= 0) AND (to_integer(counter_reg) < timer_counts) ELSE
-	'0';
+		'0';
 
 	PROCESS (clk, rst)
 	BEGIN
@@ -48,6 +47,7 @@ BEGIN
 			req_reg <= B"0000000000";
 			cur_floor <= B"0000";
 			counter_reg <= B"0000";
+
 		ELSIF (clk'event AND clk = '1') THEN
 			state_reg <= state_next;
 			req_reg <= req_next;
@@ -99,18 +99,36 @@ BEGIN
 	PROCESS (clk, up_buttons, down_buttons, elevator_buttons)
 	BEGIN
 
-		req_next <= (elevator_buttons(9) OR down_buttons(8)) & (elevator_buttons(8 DOWNTO 1) OR up_buttons(8 DOWNTO 1) OR down_buttons(7 DOWNTO 0)) & (elevator_buttons(0) OR up_buttons(0) );
+		req_next <= (elevator_buttons(9) OR down_buttons(8)) & (elevator_buttons(8 DOWNTO 1) OR up_buttons(8 DOWNTO 1) OR down_buttons(7 DOWNTO 0)) & (elevator_buttons(0) OR up_buttons(0));
 
 		testloop : FOR i IN 0 TO floors - 1 LOOP
+			--fml ask roeya
 			IF (req_reg(i) = '1') THEN
-			-- IF (req_next(i) = '1' AND state_reg = up) THEN
 				request <= std_logic_vector(to_signed(i, 4));
-				max_req <= std_logic_vector(to_signed(i, 4));
-                
-				-- request <= std_logic_vector(to_signed(i, 4));
-				-- min_req <= std_logic_vector(to_signed(i, 4));
 			END IF;
 		END LOOP;
+
+		templooppsmax : FOR k IN 0 TO floors - 1 LOOP
+			IF (req_reg(k) = '1') THEN
+				IF (to_integer(unsigned(max_req)) < k) THEN
+					max_req <= std_logic_vector(to_signed(k, 4));
+					min_req <= std_logic_vector(to_signed(9 - k, 4));
+
+				END IF;
+				IF (to_integer(unsigned(min_req)) > k) THEN
+					min_req <= std_logic_vector(to_signed(k, 4));
+				END IF;
+			END IF;
+		END LOOP;
+
+		-- templooppsmin : FOR l IN floors - 1 DOWNTO 0 LOOP
+		-- 	IF (req_reg(l) = '1') THEN
+		-- 		IF (to_integer(unsigned(min_req)) > l) THEN
+		-- 			min_req <= std_logic_vector(to_signed(l, 4));
+		-- 		END IF;
+
+		-- 	END IF;
+		-- END LOOP;
 	END PROCESS;
 
 END elevatorarch;
