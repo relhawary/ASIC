@@ -32,35 +32,34 @@ BEGIN
     --     IF (rst = '1') THEN
     --         <= (OTHERS => '0');  
     --     ELSIF (clk'event AND clk = '1') THEN
-
     --         req_reg <= req_next;
     --     END IF;
     -- END PROCESS;
     logic : PROCESS (state_previous, going_up, going_down, current_floor)
     BEGIN
-       -- IF (state_previous = state_up or to_integer(unsigned(current_floor))=0) THEN
-            goingUpLoop : FOR i IN floors-1 DOWNTO 0 LOOP
-                IF (i > to_integer(unsigned(current_floor)) AND going_up(i) = '1') THEN
-                    request <= std_logic_vector(to_unsigned(i, 4));
-                ELSIF (i > to_integer(unsigned(current_floor)) AND (going_up(i) = '0' AND going_down(i) = '1')) THEN
-                    request <= std_logic_vector(to_unsigned(i, 4));
-                END IF;
-            END LOOP; -- goingUpLoop
+        -- IF (state_previous = state_up or to_integer(unsigned(current_floor))=0) THEN
+        goingUpLoop : FOR i IN floors - 1 DOWNTO 0 LOOP
+            IF (i > to_integer(unsigned(current_floor)) AND going_up(i) = '1') THEN
+                request <= std_logic_vector(to_unsigned(i, 4));
+            ELSIF (i > to_integer(unsigned(current_floor)) AND (going_up(i) = '0' AND going_down(i) = '1')) THEN
+                request <= std_logic_vector(to_unsigned(i, 4));
+            END IF;
+        END LOOP; -- goingUpLoop
         --ELSIF (state_previous = state_down or to_integer(unsigned(current_floor))=floors-1) THEN
-            goingDownLoop : FOR j IN 0 TO floors-1 LOOP
-                IF (j < to_integer(unsigned(current_floor)) AND going_down(j) = '1') THEN
-                    request <= std_logic_vector(to_unsigned(j, 4));
-                ELSIF (j < to_integer(unsigned(current_floor)) AND (going_down(j) = '0' AND going_up(j) = '1')) THEN
-                    request <= std_logic_vector(to_unsigned(j, 4));
-                END IF;
-            END LOOP; -- goingDownLoop
+        goingDownLoop : FOR j IN 0 TO floors - 1 LOOP
+            IF (j < to_integer(unsigned(current_floor)) AND going_down(j) = '1') THEN
+                request <= std_logic_vector(to_unsigned(j, 4));
+            ELSIF (j < to_integer(unsigned(current_floor)) AND (going_down(j) = '0' AND going_up(j) = '1')) THEN
+                request <= std_logic_vector(to_unsigned(j, 4));
+            END IF;
+        END LOOP; -- goingDownLoop
         --END IF;
     END PROCESS; -- logic
     going_up <= elevator_buttons(9) & (up_buttons(8 DOWNTO 0) OR elevator_buttons(8 DOWNTO 0));
     going_down <= (down_buttons(8 DOWNTO 0) OR elevator_buttons(9 DOWNTO 1)) & elevator_buttons(0);
-        -- going_up_current <=
-        -- request_vector <= going_up OR going_down;
-        state_previous <= state_up WHEN (up_indicator = '1') ELSE
+    -- going_up_current <=
+    -- request_vector <= going_up OR going_down;
+    state_previous <= state_up WHEN (up_indicator = '1') ELSE
         state_down WHEN (down_indicator = '1') ELSE
         neither;
     --will infer latch

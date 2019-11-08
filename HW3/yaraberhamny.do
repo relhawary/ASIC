@@ -1,5 +1,5 @@
 restart -f
-force -freeze sim:/elev_cnt/clk 1 0, 0 {50 ns} -r 100
+force -freeze sim:/elev_cnt/clk 0 0, 1 {50 ns} -r 100
 force -freeze sim:/elev_cnt/rst 0 0
 force -freeze sim:/elev_cnt/rst 1 0
 force -freeze sim:/elev_cnt/down_buttons 9'b010000000 0
