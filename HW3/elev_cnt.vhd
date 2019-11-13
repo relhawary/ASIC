@@ -113,8 +113,8 @@ BEGIN
             up_indicator_internal_reg <= up_indicator_internal_next;
             down_indicator_internal_reg <= down_indicator_internal_next;
             door_open_internal_reg <= door_open_internal_next;
-            req_reg <= elevator_buttons AND req_nd_reg;
-            --req_reg <= req_next;
+            -- req_reg <= (NOT elevator_buttons) AND req_nd_reg;
+            req_reg <= req_next;
             counter_reg <= counter_next;
             req_reg_shift_l <= shift_left(unsigned(req_reg), floors - to_integer(unsigned(current_floor_reg)));
             req_reg_shift_r <= shift_right(unsigned(req_reg), to_integer(unsigned(current_floor_reg)) + 1);
@@ -132,7 +132,7 @@ BEGIN
         up_indicator_internal_next <= up_indicator_internal_reg;
         down_indicator_internal_next <= down_indicator_internal_reg;
         door_open_internal_next <= door_open_internal_reg;
-        -- req_next <= req_reg;
+        req_next <= req_reg;
         --  req_next <= (not elevator_buttons) AND req_nd_reg;
         -- req_next <= (elevator_buttons(9) OR down_buttons(8)) &
         -- (elevator_buttons(8 DOWNTO 1) OR down_buttons(7 DOWNTO 0) OR up_buttons(8 DOWNTO 1)) &
@@ -148,7 +148,7 @@ BEGIN
                 -- req_next <= (elevator_buttons(9) OR down_buttons(8)) &
                 --     (elevator_buttons(8 DOWNTO 1) OR down_buttons(7 DOWNTO 0) OR up_buttons(8 DOWNTO 1)) &
                 --     (elevator_buttons(0) OR up_buttons(0));
-                -- req_next <= (NOT elevator_buttons) AND req_nd_reg;
+                req_next <= (NOT elevator_buttons) AND req_nd_reg;
                 req_nd_next <= "1111";
                 up_indicator_internal_next <= '0';
                 down_indicator_internal_next <= '0';
@@ -165,7 +165,9 @@ BEGIN
                 door_open_internal_next <= '0';
                 up_indicator_internal_next <= '1';
                 -- req_next<=req_reg;
-                IF (to_integer(counter_reg) = clk_delay_sim) THEN
+                req_next <= (NOT elevator_buttons) AND req_nd_reg;
+
+                IF (to_integer(counter_reg) = clk_delay) THEN
                     counter_next <= (OTHERS => '0');
                     IF (req_reg(to_integer(unsigned(current_floor_reg))) = '1') THEN
 
@@ -177,7 +179,7 @@ BEGIN
                         state_next <= moving_up;
 
                     END IF;
-                ELSIF (to_integer(counter_reg) < clk_delay_sim) THEN
+                ELSIF (to_integer(counter_reg) < clk_delay) THEN
                     counter_next <= counter_reg + 1;
                 END IF;
 
@@ -187,7 +189,9 @@ BEGIN
                 door_open_internal_next <= '0';
                 down_indicator_internal_next <= '1';
                 -- req_next<=req_reg;
-                IF (to_integer(counter_reg) = clk_delay_sim) THEN
+                req_next <= (NOT elevator_buttons) AND req_nd_reg;
+
+                IF (to_integer(counter_reg) = clk_delay) THEN
                     counter_next <= (OTHERS => '0');
                     IF (req_reg(to_integer(unsigned(current_floor_reg))) = '1') THEN
                         state_next <= open_door;
@@ -195,7 +199,7 @@ BEGIN
                         current_floor_next <= std_logic_vector(unsigned(current_floor_reg) - 1);
                         state_next <= moving_down;
                     END IF;
-                ELSIF (to_integer(counter_reg) < clk_delay_sim) THEN
+                ELSIF (to_integer(counter_reg) < clk_delay) THEN
                     counter_next <= counter_reg + 1;
                 END IF;
 
@@ -214,7 +218,7 @@ BEGIN
                 -- down_buttons(to_integer(unsigned(current_floor_reg))) <= '0';
 
                 --IF (count= '1') then
-                IF (to_integer(counter_reg) = clk_delay_sim) THEN
+                IF (to_integer(counter_reg) = clk_delay) THEN
                     counter_next <= (OTHERS => '0');
                     IF (to_integer(req_reg_shift_l) > 0) THEN
                         current_floor_next <= std_logic_vector(unsigned(current_floor_reg) - 1);
@@ -226,7 +230,7 @@ BEGIN
                     ELSE
                         state_next <= idle;
                     END IF;
-                ELSIF (to_integer(counter_reg) < clk_delay_sim) THEN
+                ELSIF (to_integer(counter_reg) < clk_delay) THEN
                     counter_next <= counter_reg + 1;
                 END IF;
         END CASE;
