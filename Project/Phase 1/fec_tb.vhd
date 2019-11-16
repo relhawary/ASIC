@@ -25,7 +25,7 @@ ARCHITECTURE tbarch OF fec_tb IS
     SIGNAL out_vector : std_logic_vector(0 TO 191);
     CONSTANT period : TIME := 20 ns;
     CONSTANT test_in : std_logic_vector(0 TO 95) := x"558AC4A53A1724E163AC2BF9";
-    CONSTANT test_in_b : std_logic_vector(0 TO 95) := x"558AC4A53A1724E163AC2BF8";
+    CONSTANT test_in_b : std_logic_vector(0 TO 95) := x"558AC4A53A1724E163AC2BF9";
     CONSTANT test_out : std_logic_vector(0 TO 191) := x"2833E48D392026D5B6DC5E4AF47ADD29494B6C89151348CA";
 BEGIN
     uut : fec_rtl

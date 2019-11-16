@@ -17,6 +17,7 @@ ARCHITECTURE behav OF fec_rtl IS
     TYPE encoderState IS (idle, init, shiftx, shifty);
 
     -- signals
+
     SIGNAL data_out_int : std_logic;
     SIGNAL data_out_valid_int : std_logic;
     SIGNAL buff_a : std_logic_vector(0 TO 95);
@@ -27,7 +28,9 @@ ARCHITECTURE behav OF fec_rtl IS
     SIGNAL state_reg : encoderState;
     SIGNAL state_counter : std_logic_vector(6 DOWNTO 0);
     SIGNAL buff_temp : std_logic_vector(0 TO 95);
+
 BEGIN
+
     data_out <= data_out_int;
     data_out_valid <= data_out_valid_int;
 
@@ -78,16 +81,17 @@ BEGIN
     BEGIN
         IF (rst = '1') THEN
             data_out_int <= '0';
-            data_out_valid_int <= '0';
+            data_out_valid_int <= '1';
             state_reg <= idle;
             state_counter <= (OTHERS => '0');
             buff_temp <= (OTHERS => '0');
         ELSIF (clk2'event AND clk2 = '1') THEN
-            data_out_int <= '0';
+            data_out_int <= '1';
             data_out_valid_int <= '0';
             shift_reg <= shift_reg;
             state_counter <= (OTHERS => '0');
             buff_temp <= buff_temp;
+            data_out_valid_int <= '0';
             CASE state_reg IS
                 WHEN idle =>
                     IF (buff_a_full = '1' OR buff_b_full = '1') THEN
@@ -108,17 +112,26 @@ BEGIN
                 WHEN shiftx =>
                     IF (to_integer(unsigned(state_counter)) < 96) THEN
                         data_out_int <= buff_temp(to_integer(unsigned(state_counter)))XOR shift_reg(0) XOR shift_reg(1) XOR shift_reg(2) XOR shift_reg(5);
-                        shift_reg <= shift_reg(4 DOWNTO 0) & buff_temp(to_integer(unsigned(state_counter)));
-                        state_counter <= std_logic_vector(unsigned(state_counter) + "0000001");
+                        -- shift_reg <= shift_reg(4 DOWNTO 0) & buff_temp(to_integer(unsigned(state_counter)));
+                        -- state_counter <= std_logic_vector(unsigned(state_counter) + "0000001");
+                        state_counter <= state_counter;
                         state_reg <= shifty;
+                        data_out_valid_int <= '1';
                     ELSE
+
                         state_reg <= init;
                     END IF;
                 WHEN shifty =>
-                    --state_counter <= std_logic_vector(unsigned(state_counter) + "00000001");
-                    state_counter <= state_counter;
+                    shift_reg <= shift_reg(4 DOWNTO 0) & buff_temp(to_integer(unsigned(state_counter)));
+                    state_counter <= std_logic_vector(unsigned(state_counter) + "0000001");
+                    data_out_valid_int <= '1';
                     data_out_int <= buff_temp(to_integer(unsigned(state_counter))) XOR shift_reg(1) XOR shift_reg(2) XOR shift_reg(4) XOR shift_reg(5);
-                    state_reg <= shiftx;
+                    IF (to_integer(unsigned(state_counter)) < 95) THEN
+
+                        state_reg <= shiftx;
+                    ELSE
+                        state_reg <= init;
+                    END IF;
             END CASE;
 
         END IF;
