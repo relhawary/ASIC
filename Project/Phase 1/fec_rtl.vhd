@@ -56,7 +56,7 @@ BEGIN
                     buff_a_full <= '1';
                     buff_b_full <= '0';
                 END IF;
-                -- ELSIF (buff_a_full = '1') THEN
+                --ELSIF (buff_a_full = '1') THEN
                 IF ((to_integer(unsigned(counter)) > 95) AND (to_integer(unsigned(counter)) < 191)) THEN
                     buff_b(to_integer(unsigned(counter)) - 96) <= data_in;
                     counter <= (std_logic_vector(unsigned(counter) + "00000001"));
@@ -77,7 +77,7 @@ BEGIN
         END IF;
     END PROCESS;
 
-    PROCESS (clk2, rst, buff_a_full, buff_b_full)
+    PROCESS (clk2, rst)
     BEGIN
         IF (rst = '1') THEN
             data_out_int <= '0';
