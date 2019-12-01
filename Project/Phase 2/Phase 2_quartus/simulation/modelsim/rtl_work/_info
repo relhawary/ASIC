@@ -1,0 +1,133 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/Roeya/Documents/ASIC/Project/Phase 2/Phase 2_quartus/simulation/modelsim
+Edpr
+Z1 w1574975849
+Z2 DPx9 altera_mf 20 altera_mf_components 0 22 gV:l9C^?PSb6]b5V?_jR@3
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+R0
+Z5 8C:/Users/Roeya/Documents/ASIC/Project/Phase 2/Phase 2_quartus/dpr.vhd
+Z6 FC:/Users/Roeya/Documents/ASIC/Project/Phase 2/Phase 2_quartus/dpr.vhd
+l0
+L42
+V]oLE1]ZNl;Zl4jB;d=UiG1
+!s100 d26moL7ndWajO?g99H@W=1
+Z7 OV;C;10.5b;63
+31
+Z8 !s110 1575146991
+!i10b 1
+Z9 !s108 1575146991.000000
+Z10 !s90 -reportprogress|300|-93|-work|work|C:/Users/Roeya/Documents/ASIC/Project/Phase 2/Phase 2_quartus/dpr.vhd|
+Z11 !s107 C:/Users/Roeya/Documents/ASIC/Project/Phase 2/Phase 2_quartus/dpr.vhd|
+!i113 1
+Z12 o-93 -work work
+Z13 tExplicit 1 CvgOpt 0
+Asyn
+R2
+R3
+R4
+DEx4 work 3 dpr 0 22 ]oLE1]ZNl;Zl4jB;d=UiG1
+l64
+L59
+V66XjQOdI7jfL^OacNRK2z3
+!s100 BUB]ARl6mEHbPTE;3C2mH0
+R7
+31
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 1
+R12
+R13
+Efec_rtl
+Z14 w1575145487
+Z15 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
+R3
+R4
+R0
+Z16 8C:/Users/Roeya/Documents/ASIC/Project/Phase 2/fec_rtl.vhd
+Z17 FC:/Users/Roeya/Documents/ASIC/Project/Phase 2/fec_rtl.vhd
+l0
+L5
+V0j2kInBX:NJ`hX2]ooi]I1
+!s100 ]UUIESXR7fkK?C<QG0?d42
+R7
+31
+R8
+!i10b 1
+Z18 !s108 1575146990.000000
+Z19 !s90 -reportprogress|300|-93|-work|work|C:/Users/Roeya/Documents/ASIC/Project/Phase 2/fec_rtl.vhd|
+Z20 !s107 C:/Users/Roeya/Documents/ASIC/Project/Phase 2/fec_rtl.vhd|
+!i113 1
+R12
+R13
+Abehav
+R15
+R3
+R4
+DEx4 work 7 fec_rtl 0 22 0j2kInBX:NJ`hX2]ooi]I1
+l55
+L14
+Vk0L<kk[WJcmVQJcUlo;QQ3
+!s100 UN:CC5ge=g]nlcB<dAc<c3
+R7
+31
+R8
+!i10b 1
+R18
+R19
+R20
+!i113 1
+R12
+R13
+Efec_tb
+Z21 w1575146975
+R15
+R3
+R4
+R0
+Z22 8C:/Users/Roeya/Documents/ASIC/Project/Phase 2/Phase 2_quartus/../fec_tb.vhd
+Z23 FC:/Users/Roeya/Documents/ASIC/Project/Phase 2/Phase 2_quartus/../fec_tb.vhd
+l0
+L5
+V3H3LHn=PW>IM5?dh2[SVe1
+!s100 RY[0<3`f[[ZB5JTY]CeSF1
+R7
+31
+R8
+!i10b 1
+R9
+Z24 !s90 -reportprogress|300|-93|-work|work|C:/Users/Roeya/Documents/ASIC/Project/Phase 2/Phase 2_quartus/../fec_tb.vhd|
+Z25 !s107 C:/Users/Roeya/Documents/ASIC/Project/Phase 2/Phase 2_quartus/../fec_tb.vhd|
+!i113 1
+R12
+R13
+Atbarch
+R15
+R3
+R4
+DEx4 work 6 fec_tb 0 22 3H3LHn=PW>IM5?dh2[SVe1
+l31
+L8
+V`04Bmg[e17cXbY9?m`Sh@0
+!s100 QX1UEd0HF=nkho[2<C^U`0
+R7
+31
+R8
+!i10b 1
+R9
+R24
+R25
+!i113 1
+R12
+R13

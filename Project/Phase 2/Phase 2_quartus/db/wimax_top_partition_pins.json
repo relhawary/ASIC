@@ -1,0 +1,37 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "data_out_valid",
+					"strict" : false
+				},
+				{
+					"name" : "data_out",
+					"strict" : false
+				},
+				{
+					"name" : "clk2",
+					"strict" : false
+				},
+				{
+					"name" : "rst",
+					"strict" : false
+				},
+				{
+					"name" : "clk1",
+					"strict" : false
+				},
+				{
+					"name" : "data_in_ready",
+					"strict" : false
+				},
+				{
+					"name" : "data_in[0]",
+					"strict" : false
+				}
+			]
+		}
+	]
+}
