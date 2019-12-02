@@ -44,7 +44,7 @@ BEGIN
         ELSIF (clk'event AND clk = '1') THEN
             data_out_int <= '1';
             data_out_valid_int <= '0';
-            --  index <= 0;
+            --index <= 0;
             buff_b_full <= buff_b_full;
             buff_a_full <= buff_a_full;
             buff_a <= buff_a;

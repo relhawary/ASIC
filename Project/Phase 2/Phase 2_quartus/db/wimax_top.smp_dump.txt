@@ -1,9 +1,6 @@
 
-State Machine - |fec_rtl|state_reg
-Name state_reg.shifty state_reg.shiftx state_reg.addressb state_reg.hold state_reg.init state_reg.idle 
-state_reg.idle 0 0 0 0 0 0 
-state_reg.init 0 0 0 0 1 1 
-state_reg.hold 0 0 0 1 0 1 
-state_reg.addressb 0 0 1 0 0 1 
-state_reg.shiftx 0 1 0 0 0 1 
-state_reg.shifty 1 0 0 0 0 1 
+State Machine - |interleaver_rtl_2|state_reg
+Name state_reg.input_output state_reg.input_a state_reg.idle 
+state_reg.idle 0 0 0 
+state_reg.input_a 0 1 1 
+state_reg.input_output 1 0 1 

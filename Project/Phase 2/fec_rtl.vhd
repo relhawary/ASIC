@@ -17,10 +17,10 @@ ARCHITECTURE behav OF fec_rtl IS
         PORT (
             address_a : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
             address_b : IN STD_LOGIC_VECTOR (4 DOWNTO 0);
+            clock_a : IN STD_LOGIC := '1';
+            clock_b : IN STD_LOGIC;
             data_a : IN STD_LOGIC_VECTOR (0 DOWNTO 0);
             data_b : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
-            inclock : IN STD_LOGIC;--:= '1'; -----oppppppppsssssss
-            outclock : IN STD_LOGIC;
             wren_a : IN STD_LOGIC := '0';
             wren_b : IN STD_LOGIC := '0';
             q_a : OUT STD_LOGIC_VECTOR (0 DOWNTO 0);
@@ -59,8 +59,8 @@ BEGIN
     (
         address_a => address_a,
         address_b => address_b,
-        inclock => clk1,
-        outclock => clk2,
+        clock_a => clk1,
+        clock_b => clk2,
         data_a => data_in,
         data_b => data_b,
         wren_a => wren_a,
@@ -187,11 +187,11 @@ BEGIN
                     state_reg <= shifty;
                     data_out_valid_int <= '1';
                     --END IF;
-                    IF (to_integer(unsigned(state_counter)) = 7 AND (to_integer(unsigned(address_b)) /= 11 AND to_integer(unsigned(address_b)) /= 23)) THEN
-                        address_b <= std_logic_vector(unsigned(address_b) + "00001");
-                    ELSE
-                        address_b <= address_b;
-                    END IF;
+                    -- IF (to_integer(unsigned(state_counter)) = 7 AND (to_integer(unsigned(address_b)) /= 11 AND to_integer(unsigned(address_b)) /= 23)) THEN
+                    --     address_b <= std_logic_vector(unsigned(address_b) + "00001");
+                    -- ELSE
+                    --     address_b <= address_b;
+                    -- END IF;
 
                 WHEN shifty =>
                     shift_reg <= q_b(to_integer(unsigned(state_counter))) & shift_reg(5 DOWNTO 1);
@@ -214,6 +214,11 @@ BEGIN
                         -- data_out_int <= q_b(to_integer(unsigned(state_counter))) XOR shift_reg(4) XOR shift_reg(3) XOR shift_reg(1) XOR shift_reg(0);
                         -- data_out_valid_int <= '1';
                         state_reg <= shiftx;
+                        IF (to_integer(unsigned(state_counter)) = 6 AND (to_integer(unsigned(address_b)) /= 11 AND to_integer(unsigned(address_b)) /= 23)) THEN
+                            address_b <= std_logic_vector(unsigned(address_b) + "00001");
+                        ELSE
+                            address_b <= address_b;
+                        END IF;
                         IF (to_integer(unsigned(state_counter)) = 7) THEN
                             state_counter <= (OTHERS => '0');
                             -- address_b <= std_logic_vector(unsigned(address_b) + "00001");

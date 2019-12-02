@@ -12,15 +12,11 @@
 					"strict" : false
 				},
 				{
-					"name" : "clk2",
-					"strict" : false
-				},
-				{
 					"name" : "rst",
 					"strict" : false
 				},
 				{
-					"name" : "clk1",
+					"name" : "clk",
 					"strict" : false
 				},
 				{
@@ -28,7 +24,7 @@
 					"strict" : false
 				},
 				{
-					"name" : "data_in[0]",
+					"name" : "data_in",
 					"strict" : false
 				}
 			]

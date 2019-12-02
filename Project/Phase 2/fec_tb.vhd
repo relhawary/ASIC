@@ -15,8 +15,8 @@ ARCHITECTURE tbarch OF fec_tb IS
         );
     END COMPONENT;
 
-    SIGNAL clk1 : std_logic := '0';
-    SIGNAL clk2 : std_logic := '0';
+    SIGNAL clk1 : std_logic := '1';
+    SIGNAL clk2 : std_logic := '1';
     SIGNAL rst : std_logic := '0';
     SIGNAL data_in_ready : std_logic := '0';
     SIGNAL data_in : std_logic_vector(0 DOWNTO 0) := "0";
@@ -64,7 +64,7 @@ BEGIN
             WAIT FOR period;
         END LOOP;
 
-        WAIT FOR (6.5 * period);
+        WAIT FOR (7.5 * period);
 
         FOR k IN 0 TO 191 LOOP
             out_vector(k) <= data_out;
