@@ -4,8 +4,11 @@ USE ieee.numeric_std.ALL;
 
 ENTITY wimax_top IS
     PORT (
-        clk, rset, data_in_ready : IN std_logic;
+        clk1, clk2, rset, data_in_ready : IN std_logic;
         data_in : IN std_logic;
+        prbs_out, prbs_out_valid : OUT std_logic;
+        fec_out, fec_out_valid : OUT std_logic;
+        inlv_out, inlv_out_valid : OUT std_logic;
         data_out_I, data_out_Q : OUT std_logic_vector(15 DOWNTO 0);
         data_out_valid : OUT std_logic
     );
@@ -13,21 +16,21 @@ END wimax_top;
 
 ARCHITECTURE wimax OF wimax_top IS
     --signals
-    SIGNAL clk1, clk2, reset : std_logic;
+    -- SIGNAL clk1, clk2, reset : std_logic;
     SIGNAL mid_1, mid_1_valid : std_logic;
     SIGNAL mid_2, mid_2_valid : std_logic;
     SIGNAL mid_3, mid_3_valid : std_logic;
 
     --component declarations 
-    COMPONENT pll IS
-        PORT (
-            refclk : IN std_logic; --  refclk.clk
-            rst : IN std_logic; --   reset.reset
-            outclk_0 : OUT std_logic; -- outclk0.clk
-            outclk_1 : OUT std_logic; -- outclk1.clk
-            locked : OUT std_logic --  locked.export
-        );
-    END COMPONENT;
+    -- COMPONENT pll IS
+    --     PORT (
+    --         refclk : IN std_logic; --  refclk.clk
+    --         rst : IN std_logic; --   reset.reset
+    --         outclk_0 : OUT std_logic; -- outclk0.clk
+    --         outclk_1 : OUT std_logic; -- outclk1.clk
+    --         locked : OUT std_logic --  locked.export
+    --     );
+    -- END COMPONENT;
     COMPONENT prbs_rtl IS
         PORT (
             clk1, reset, data_in_ready_prbs : IN std_logic;
@@ -68,7 +71,7 @@ BEGIN
     PORT MAP
     (
         clk1 => clk1,
-        reset => reset,
+        reset => rset,
         data_in_ready_prbs => data_in_ready,
         data_in_prbs => data_in,
         data_out_prbs => mid_1,
@@ -80,7 +83,7 @@ BEGIN
     (
         clk1 => clk1, --pll
         clk2 => clk2, --pll
-        rst => reset,
+        rst => rset,
         data_in_ready_fec => mid_1_valid,
         data_in_fec => mid_1,
         data_out_fec => mid_2,
@@ -91,7 +94,7 @@ BEGIN
     PORT MAP
     (
         clk2 => clk2,
-        rst => reset,
+        rst => rset,
         data_in_ready_inlv => mid_2_valid,
         data_in_inlv => mid_2,
         data_out_inlv => mid_3,
@@ -102,21 +105,26 @@ BEGIN
     PORT MAP
     (
         clk => clk2,
-        rst => reset,
+        rst => rset,
         data_in_mod => mid_3,
         data_in_ready_mod => mid_3_valid,
         data_out_I => data_out_I,
         data_out_Q => data_out_Q,
         data_out_valid_mod => data_out_valid
     );
-    pll_clk : pll
-    PORT MAP
-    (
-        refclk => clk,
-        rst => rset,
-        outclk_0 => clk2,
-        outclk_1 => clk1,
-        locked => reset
-    );
-
+    -- pll_clk : pll
+    -- PORT MAP
+    -- (
+    --     refclk => clk,
+    --     rst => rset,
+    --     outclk_0 => clk2,
+    --     outclk_1 => clk1,
+    --     locked => reset
+    -- );
+    prbs_out <= mid_1;
+    prbs_out_valid <= mid_1_valid;
+    fec_out <= mid_2;
+    fec_out_valid <= mid_2_valid;
+    inlv_out <= mid_3;
+    inlv_out_valid <= mid_3_valid;
 END wimax;
