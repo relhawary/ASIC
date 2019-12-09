@@ -4,10 +4,10 @@ USE ieee.numeric_std.ALL;
 
 ENTITY fec_rtl IS
     PORT (
-        clk1, clk2, rst, data_in_ready : IN std_logic;
-        data_out_valid : OUT std_logic;
-        data_in : IN std_logic_vector(0 DOWNTO 0);
-        data_out : OUT std_logic
+        clk1, clk2, rst, data_in_ready_fec : IN std_logic;
+        data_out_valid_fec : OUT std_logic;
+        data_in_fec : IN std_logic;
+        data_out_fec : OUT std_logic
     );
 END fec_rtl;
 
@@ -61,7 +61,7 @@ BEGIN
         address_b => address_b,
         clock_a => clk1,
         clock_b => clk2,
-        data_a => data_in,
+        data_a(0) => data_in_fec,
         data_b => data_b,
         wren_a => wren_a,
         wren_b => wren_b,
@@ -69,12 +69,12 @@ BEGIN
         q_b => q_b
     );
 
-    data_out <= data_out_int;
-    data_out_valid <= data_out_valid_int;
+    data_out_fec <= data_out_int;
+    data_out_valid_fec <= data_out_valid_int;
 
     PROCESS (clk1, rst)
     BEGIN
-        IF (rst = '1') THEN
+        IF (rst = '0') THEN
             wren_a <= '0';
             wren_b <= '0';
             data_a <= (OTHERS => '0');
@@ -83,9 +83,9 @@ BEGIN
         ELSIF (clk1'event AND clk1 = '1') THEN
             wren_b <= '0';
             -- address_b<=address_b;
-            IF (data_in_ready = '1') THEN
+            IF (data_in_ready_fec = '1') THEN
                 wren_a <= '1';
-                data_a <= data_in;
+                data_a(0) <= data_in_fec;
                 IF (to_integer(unsigned(address_a)) < 191) THEN
                     address_a <= (std_logic_vector(unsigned(address_a) + "00000001"));
                 ELSE

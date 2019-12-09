@@ -4,10 +4,10 @@ USE ieee.numeric_std.ALL;
 
 ENTITY interleaver_rtl_2 IS
     PORT (
-        clk, rst, data_in_ready : IN std_logic;
-        data_out_valid : OUT std_logic;
-        data_in : IN std_logic;
-        data_out : OUT std_logic
+        clk2, rst, data_in_ready_inlv : IN std_logic;
+        data_out_valid_inlv : OUT std_logic;
+        data_in_inlv : IN std_logic;
+        data_out_inlv : OUT std_logic
     );
 END interleaver_rtl_2;
 
@@ -54,7 +54,7 @@ BEGIN
     (
         address_a => address_a,
         address_b => address_b,
-        clock => clk,
+        clock => clk2,
         data_a => data_a,
         data_b => data_b,
         wren_a => wren_a,
@@ -63,24 +63,13 @@ BEGIN
         q_b => q_b
     );
     --output logic
-    -- data_out <= data_out_int;
-    data_out <= q_b(0) WHEN state_reg = input_output ELSE
-        '0';
-    data_out_valid <= '1' WHEN state_reg = input_output ELSE
-        '0';
-    -- address_a <= std_logic_vector(to_unsigned(12 * (to_integer(unsigned(counter_a) MOD "10000")) + to_integer(unsigned(counter_a)/"10000"), 9))
-    --     WHEN
-    --     (to_integer(unsigned(counter_b)) >= 0 AND to_integer(unsigned(counter_b)) < 192)
-    --     ELSE
-    --     std_logic_vector(to_unsigned(12 * (to_integer(unsigned(counter_a) MOD "10000")) + to_integer(unsigned(counter_a)/"10000") + 192, 9));
+    data_out_valid_inlv <= data_out_valid_int;
+    data_out_inlv <= data_out_int;
 
-    data_a(0) <= data_in
-    WHEN data_in_ready = '1' ELSE
-    '0';
     --FSM
-    PROCESS (clk, rst)
+    PROCESS (clk2, rst)
     BEGIN
-        IF (rst = '1') THEN
+        IF (rst = '0') THEN
 
             counter_a <= (OTHERS => '0');
             counter_b <= (OTHERS => '0');
@@ -91,7 +80,7 @@ BEGIN
             address_a <= (OTHERS => '0');
             address_b <= (OTHERS => '0');
 
-        ELSIF (clk'event AND clk = '1') THEN
+        ELSIF (clk2'event AND clk2 = '1') THEN
 
             data_out_int <= '0';
             data_out_valid_int <= '0';
@@ -104,56 +93,66 @@ BEGIN
 
             CASE state_reg IS
                 WHEN idle =>
-                    IF (data_in_ready = '1') THEN
+                    IF (data_in_ready_inlv = '1') THEN
                         state_reg <= input_a;
-                        -- address_a <= std_logic_vector(to_unsigned(12 * (to_integer(unsigned(counter_a) MOD "10000")) + to_integer(unsigned(counter_a)/"10000"), 9));
-                        counter_a <= std_logic_vector(unsigned(counter_a) + "00000001");
+                        --address_a <= std_logic_vector(to_unsigned(12 * (to_integer(unsigned(counter_a) MOD "10000")) + to_integer(unsigned(counter_a)/"10000"), 9));
+                        --counter_a <= std_logic_vector(unsigned(counter_a) + "00000001");
+                        data_a(0) <= data_in_inlv;
                     ELSE
                         state_reg <= idle;
                     END IF;
 
                 WHEN input_a =>
 
-                    IF (to_integer(unsigned(counter_a)) < 192) THEN
+                    IF (to_integer(unsigned(counter_a)) < 191) THEN
+                        data_a(0) <= data_in_inlv;
+                        address_a <= std_logic_vector(to_unsigned(12 * (to_integer(unsigned(counter_a) MOD "10000")) + to_integer(unsigned(counter_a)/"10000"), 9));
                         counter_a <= std_logic_vector(unsigned(counter_a) + "00000001");
                         counter_b <= std_logic_vector(unsigned(counter_b) + "00000001");
-                        address_a <= std_logic_vector(to_unsigned(12 * (to_integer(unsigned(counter_a) MOD "10000")) + to_integer(unsigned(counter_a)/"10000"), 9));
                         state_reg <= input_a;
                     ELSE
+                        data_a(0) <= data_in_inlv;
+                        address_a <= std_logic_vector(to_unsigned(12 * (to_integer(unsigned(counter_a) MOD "10000")) + to_integer(unsigned(counter_a)/"10000"), 9));
                         counter_a <= (OTHERS => '0');
+                        counter_b <= std_logic_vector(unsigned(counter_b) + "00000001");
+                        address_b <= "000000001";
                         state_reg <= input_output;
                     END IF;
 
                 WHEN input_output =>
 
                     data_out_int <= q_b(0);
-                    address_b <= std_logic_vector(unsigned(address_b) + "00000001");
-                    data_out_valid_int <= '1';
                     state_reg <= input_output;
+                    IF (to_integer(unsigned(address_b)) < 384) THEN
+                        address_b <= std_logic_vector(unsigned(address_b) + "00000001");
+                        data_out_valid_int <= '1';
+                    ELSE
+                        address_b <= "000000001";
+                        data_out_valid_int <= '1';
+                    END IF;
 
-                    IF (data_in_ready = '1') THEN
-                        data_out_int <= q_b(0);
-                        -- address_b <= std_logic_vector(unsigned(address_b) + "00000001");
-                        -- state_reg <= input_output;
-                        --  IF (to_integer(unsigned(counter_a)) < 383 AND to_integer(unsigned(counter_a)) >= 192) THEN
+                    IF (data_in_ready_inlv = '1') THEN
+                        data_a(0) <= data_in_inlv;
                         IF (to_integer(unsigned(counter_b)) >= 0 AND to_integer(unsigned(counter_b)) < 192) THEN
                             counter_b <= std_logic_vector(unsigned(counter_b) + "00000001");
+                            address_a <= std_logic_vector(to_unsigned(12 * (to_integer(unsigned(counter_a) MOD "10000")) + to_integer(unsigned(counter_a)/"10000"), 9));
                             IF (to_integer(unsigned(counter_a)) < 192) THEN
                                 counter_a <= std_logic_vector(unsigned(counter_a) + "00000001");
-                                address_a <= std_logic_vector(to_unsigned(12 * (to_integer(unsigned(counter_a) MOD "10000")) + to_integer(unsigned(counter_a)/"10000"), 9));
                             ELSE
                                 counter_a <= (OTHERS => '0');
                             END IF;
-                        ELSIF (to_integer(unsigned(counter_b)) >= 192 AND to_integer(unsigned(counter_b)) < 384) THEN
+                        ELSIF (to_integer(unsigned(counter_b)) >= 192 AND to_integer(unsigned(counter_b)) < 383) THEN
                             counter_b <= std_logic_vector(unsigned(counter_b) + "00000001");
+                            address_a <= std_logic_vector(to_unsigned(12 * (to_integer(unsigned(counter_a) MOD "10000")) + to_integer(unsigned(counter_a)/"10000") + 192, 9));
                             IF (to_integer(unsigned(counter_a)) < 192) THEN
                                 counter_a <= std_logic_vector(unsigned(counter_a) + "00000001");
-                                address_a <= std_logic_vector(to_unsigned(12 * (to_integer(unsigned(counter_a) MOD "10000")) + to_integer(unsigned(counter_a)/"10000") + 192, 9));
                             ELSE
                                 counter_a <= (OTHERS => '0');
                             END IF;
-                        ELSIF (to_integer(unsigned(counter_b)) = 384) THEN
+                        ELSIF (to_integer(unsigned(counter_b)) = 383) THEN
                             counter_b <= (OTHERS => '0');
+                            counter_a <= (OTHERS => '0');
+                            address_a <= std_logic_vector(to_unsigned(12 * (to_integer(unsigned(counter_a) MOD "10000")) + to_integer(unsigned(counter_a)/"10000") + 192, 9));
                         END IF;
                     END IF;
             END CASE;

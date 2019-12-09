@@ -1,0 +1,15 @@
+do wimax_top_run_msim_rtl_vhdl.do
+add wave -position end  sim:/interleaver_tb/uut/address_a
+add wave -position end  sim:/interleaver_tb/uut/address_b
+add wave -position end  sim:/interleaver_tb/uut/q_b
+add wave -position end  sim:/interleaver_tb/uut/state_reg
+add wave -position end  sim:/interleaver_tb/uut/counter_a
+add wave -position end  sim:/interleaver_tb/uut/counter_b
+add wave -position 7  sim:/interleaver_tb/uut/data_a
+restart -f
+
+vcom -93 -work work {C:/Users/Roeya/Documents/ASIC/Project/Phase 2/interleaver_rtl_2.vhd}
+restart -f
+run
+
+001010000011001111100100100011010011100100100000001001101101010110110110110111000101111001001010111101000111101011011101001010010100100101001011011011001000100100010101000100110100100011001010

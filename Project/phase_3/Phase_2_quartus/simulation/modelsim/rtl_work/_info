@@ -1,0 +1,375 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/Roeya/Documents/ASIC/Project/phase_3/Phase_2_quartus/simulation/modelsim
+Edpr
+Z1 w1575206507
+Z2 DPx9 altera_mf 20 altera_mf_components 0 22 gV:l9C^?PSb6]b5V?_jR@3
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+R0
+Z5 8C:/Users/Roeya/Documents/ASIC/Project/phase_3/Phase_2_quartus/dpr.vhd
+Z6 FC:/Users/Roeya/Documents/ASIC/Project/phase_3/Phase_2_quartus/dpr.vhd
+l0
+L42
+V?2Xk>BPKa_FSiaXQ1g23k3
+!s100 aJ6Ln:n?^_5g@Z2SfNEPJ0
+Z7 OV;C;10.5b;63
+31
+Z8 !s110 1575843124
+!i10b 1
+Z9 !s108 1575843124.000000
+Z10 !s90 -reportprogress|300|-93|-work|work|C:/Users/Roeya/Documents/ASIC/Project/phase_3/Phase_2_quartus/dpr.vhd|
+Z11 !s107 C:/Users/Roeya/Documents/ASIC/Project/phase_3/Phase_2_quartus/dpr.vhd|
+!i113 1
+Z12 o-93 -work work
+Z13 tExplicit 1 CvgOpt 0
+Asyn
+R2
+R3
+R4
+DEx4 work 3 dpr 0 22 ?2Xk>BPKa_FSiaXQ1g23k3
+l64
+L59
+VB35YnI?JV1l43jeDODRGV2
+!s100 lbC?Cgg6=V[OVUT3`GV962
+R7
+31
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 1
+R12
+R13
+Edpr_interleaver
+Z14 w1575645083
+R2
+R3
+R4
+R0
+Z15 8C:/Users/Roeya/Documents/ASIC/Project/phase_3/Phase_2_quartus/dpr_interleaver.vhd
+Z16 FC:/Users/Roeya/Documents/ASIC/Project/phase_3/Phase_2_quartus/dpr_interleaver.vhd
+l0
+L42
+VAUkOR5e;A]MENMUW[KcR33
+!s100 ^9BoY33n_m[eoPX]XOinN1
+R7
+31
+R8
+!i10b 1
+R9
+Z17 !s90 -reportprogress|300|-93|-work|work|C:/Users/Roeya/Documents/ASIC/Project/phase_3/Phase_2_quartus/dpr_interleaver.vhd|
+Z18 !s107 C:/Users/Roeya/Documents/ASIC/Project/phase_3/Phase_2_quartus/dpr_interleaver.vhd|
+!i113 1
+R12
+R13
+Asyn
+R2
+R3
+R4
+DEx4 work 15 dpr_interleaver 0 22 AUkOR5e;A]MENMUW[KcR33
+l63
+L58
+Vg2_zfJ=CaDQe1al<mMFKW1
+!s100 MDndk@Vn;XH4AkhAE<0lc1
+R7
+31
+R8
+!i10b 1
+R9
+R17
+R18
+!i113 1
+R12
+R13
+Efec_rtl
+Z19 w1575675335
+Z20 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
+R3
+R4
+R0
+Z21 8C:/Users/Roeya/Documents/ASIC/Project/phase_3/fec_rtl.vhd
+Z22 FC:/Users/Roeya/Documents/ASIC/Project/phase_3/fec_rtl.vhd
+l0
+L5
+V1GoihU;7?[Fn3QfMX:l;E0
+!s100 SAd9lJWV5E7][l8Wid^II2
+R7
+31
+Z23 !s110 1575843123
+!i10b 1
+Z24 !s108 1575843123.000000
+Z25 !s90 -reportprogress|300|-93|-work|work|C:/Users/Roeya/Documents/ASIC/Project/phase_3/fec_rtl.vhd|
+Z26 !s107 C:/Users/Roeya/Documents/ASIC/Project/phase_3/fec_rtl.vhd|
+!i113 1
+R12
+R13
+Abehav
+R20
+R3
+R4
+DEx4 work 7 fec_rtl 0 22 1GoihU;7?[Fn3QfMX:l;E0
+l55
+L14
+V9gEAGH_NcBM>Q3zSMnR]W1
+!s100 Yo2kNHHBS2HSe5J4HD?ET3
+R7
+31
+R23
+!i10b 1
+R24
+R25
+R26
+!i113 1
+R12
+R13
+Einterleaver_rtl_2
+Z27 w1575842528
+R20
+R3
+R4
+R0
+Z28 8C:/Users/Roeya/Documents/ASIC/Project/phase_3/interleaver_rtl_2.vhd
+Z29 FC:/Users/Roeya/Documents/ASIC/Project/phase_3/interleaver_rtl_2.vhd
+l0
+L5
+VZgKoPl5DdV^[<L1WXgCAo1
+!s100 C1XhCFJU:[Y5TTl`dmkmN3
+R7
+31
+R23
+!i10b 1
+R24
+Z30 !s90 -reportprogress|300|-93|-work|work|C:/Users/Roeya/Documents/ASIC/Project/phase_3/interleaver_rtl_2.vhd|
+Z31 !s107 C:/Users/Roeya/Documents/ASIC/Project/phase_3/interleaver_rtl_2.vhd|
+!i113 1
+R12
+R13
+Abehav
+R20
+R3
+R4
+DEx4 work 17 interleaver_rtl_2 0 22 ZgKoPl5DdV^[<L1WXgCAo1
+l50
+L14
+V1FzZ`Y5bmFgkM6bM<mlE?3
+!s100 :1k^QkV7ZOh[>]CV@W=V32
+R7
+31
+R23
+!i10b 1
+R24
+R30
+R31
+!i113 1
+R12
+R13
+Emodulator_rtl
+Z32 w1575675315
+R20
+R3
+R4
+R0
+Z33 8C:/Users/Roeya/Documents/ASIC/Project/phase_3/modulator_rtl.vhd
+Z34 FC:/Users/Roeya/Documents/ASIC/Project/phase_3/modulator_rtl.vhd
+l0
+L5
+VkD;D0PhAUcHTF55gNOSk92
+!s100 ^c`JjoETk]S4]6a@Yk>cZ1
+R7
+31
+R23
+!i10b 1
+R24
+Z35 !s90 -reportprogress|300|-93|-work|work|C:/Users/Roeya/Documents/ASIC/Project/phase_3/modulator_rtl.vhd|
+Z36 !s107 C:/Users/Roeya/Documents/ASIC/Project/phase_3/modulator_rtl.vhd|
+!i113 1
+R12
+R13
+Abehav
+R20
+R3
+R4
+DEx4 work 13 modulator_rtl 0 22 kD;D0PhAUcHTF55gNOSk92
+l29
+L14
+V7j2^P?A5_cTZCF;7=T>C_1
+!s100 a6QdXT53<zdfO:B9GDQSO0
+R7
+31
+R23
+!i10b 1
+R24
+R35
+R36
+!i113 1
+R12
+R13
+Epll
+Z37 w1575662399
+R3
+R4
+Z38 DPx12 altera_lnsim 23 altera_lnsim_components 0 22 QZo1Vh6en2ZO3=hNmAfQ>0
+R0
+Z39 8C:/Users/Roeya/Documents/ASIC/Project/phase_3/Phase_2_quartus/pll_sim/pll.vho
+Z40 FC:/Users/Roeya/Documents/ASIC/Project/phase_3/Phase_2_quartus/pll_sim/pll.vho
+l0
+L33
+VWQPm5RjOAn1V3c92W6]_N0
+!s100 Y`cgODUob[GG=D`dhgk>E2
+R7
+32
+R23
+!i10b 1
+R24
+Z41 !s90 -reportprogress|300|C:/Users/Roeya/Documents/ASIC/Project/phase_3/Phase_2_quartus/pll_sim/pll.vho|
+Z42 !s107 C:/Users/Roeya/Documents/ASIC/Project/phase_3/Phase_2_quartus/pll_sim/pll.vho|
+!i113 1
+R13
+Artl
+R3
+R4
+R38
+DEx4 work 3 pll 0 22 WQPm5RjOAn1V3c92W6]_N0
+l51
+L44
+V0ggQO[lG^ObP_e_0XKJi51
+!s100 K;XL1JzgRL;_VnVO0KPz<1
+R7
+32
+R23
+!i10b 1
+R24
+R41
+R42
+!i113 1
+R13
+Eprbs_rtl
+Z43 w1575838885
+R3
+R4
+R0
+Z44 8C:/Users/Roeya/Documents/ASIC/Project/phase_3/prbs_rtl.vhd
+Z45 FC:/Users/Roeya/Documents/ASIC/Project/phase_3/prbs_rtl.vhd
+l0
+L4
+VM@^]4zdcd=]6Q`R>KPb<b0
+!s100 BRDW7MHzf6B[0?6N3GVnC2
+R7
+31
+R23
+!i10b 1
+R24
+Z46 !s90 -reportprogress|300|-93|-work|work|C:/Users/Roeya/Documents/ASIC/Project/phase_3/prbs_rtl.vhd|
+Z47 !s107 C:/Users/Roeya/Documents/ASIC/Project/phase_3/prbs_rtl.vhd|
+!i113 1
+R12
+R13
+Aprbs_arch
+R3
+R4
+DEx4 work 8 prbs_rtl 0 22 M@^]4zdcd=]6Q`R>KPb<b0
+l18
+L13
+V[_?XDSQ[HVBe2bRHacz022
+!s100 1=zRibkFW08aT0QKKjJSQ1
+R7
+31
+R23
+!i10b 1
+R24
+R46
+R47
+!i113 1
+R12
+R13
+Ewimax_top
+Z48 w1575666914
+R20
+R3
+R4
+R0
+Z49 8C:/Users/Roeya/Documents/ASIC/Project/phase_3/wimax_top.vhd
+Z50 FC:/Users/Roeya/Documents/ASIC/Project/phase_3/wimax_top.vhd
+l0
+L5
+VP<`dKlN4]^OzP;?XT36J?1
+!s100 ?aERmK3i5KMgdYTaHGzHI0
+R7
+31
+R23
+!i10b 1
+R24
+Z51 !s90 -reportprogress|300|-93|-work|work|C:/Users/Roeya/Documents/ASIC/Project/phase_3/wimax_top.vhd|
+Z52 !s107 C:/Users/Roeya/Documents/ASIC/Project/phase_3/wimax_top.vhd|
+!i113 1
+R12
+R13
+Awimax
+R20
+R3
+R4
+DEx4 work 9 wimax_top 0 22 P<`dKlN4]^OzP;?XT36J?1
+l66
+L14
+V4_e?Q85kz0OX`5N54hBPC2
+!s100 zIKV2VScnei5EBcNIL=j<3
+R7
+31
+R23
+!i10b 1
+R24
+R51
+R52
+!i113 1
+R12
+R13
+Ewimax_top_tb
+Z53 w1575843727
+R20
+R3
+R4
+R0
+Z54 8C:/Users/Roeya/Documents/ASIC/Project/phase_3/wimax_top_tb.vhd
+Z55 FC:/Users/Roeya/Documents/ASIC/Project/phase_3/wimax_top_tb.vhd
+l0
+L5
+VH4R@::gaWEjgV?<MJ9MBh2
+!s100 gPR1=Hh3F1j4YzXiGUQ6l0
+R7
+31
+Z56 !s110 1575843746
+!i10b 1
+Z57 !s108 1575843746.000000
+Z58 !s90 -reportprogress|300|-93|-work|work|C:/Users/Roeya/Documents/ASIC/Project/phase_3/wimax_top_tb.vhd|
+Z59 !s107 C:/Users/Roeya/Documents/ASIC/Project/phase_3/wimax_top_tb.vhd|
+!i113 1
+R12
+R13
+Atbarch
+R20
+R3
+R4
+Z60 DEx4 work 12 wimax_top_tb 0 22 H4R@::gaWEjgV?<MJ9MBh2
+l29
+L8
+V>zo7DV;Vj5[z[HXYjRz0l2
+!s100 Y4Ah3:GRbPHB1W9R`[YNf1
+R7
+31
+R56
+!i10b 1
+R57
+R58
+R59
+!i113 1
+R12
+R13

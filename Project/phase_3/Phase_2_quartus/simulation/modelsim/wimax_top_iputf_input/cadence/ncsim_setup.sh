@@ -1,0 +1,3 @@
+
+
+ncvhdl -v93 "C:/Users/Roeya/Documents/ASIC/Project/phase_3/Phase_2_quartus/pll_sim/pll.vho"
