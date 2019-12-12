@@ -36,6 +36,22 @@ BEGIN
         WAIT FOR (period);
         reset <= '0';
         WAIT FOR (period);
+
+        ASSERT(pass_mod = '1')
+        REPORT "MOD failed"
+            SEVERITY note;
+
+        ASSERT(pass_inlv = '1')
+        REPORT "INTER failed"
+            SEVERITY note;
+
+        ASSERT(pass_fec = '1')
+        REPORT "FEC failed"
+            SEVERITY note;
+
+        ASSERT(pass_prbs = '1')
+        REPORT "PRBS failed"
+            SEVERITY note;
         WAIT;
     END PROCESS;
 END tbarch;
